@@ -107,7 +107,7 @@ System.out.println(getMaxValue(someNum));
                 try{
                 greatestValue = numbers[i];
                 } catch (ArrayIndexOutOfBoundsException e){
-                    System.out.printlm("e");
+//                    System.out.printlm("e");
                 }
             }
 
@@ -115,3 +115,4 @@ System.out.println(getMaxValue(someNum));
         return greatestValue;
     } 
 }
+

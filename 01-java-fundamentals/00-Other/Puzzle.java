@@ -13,6 +13,15 @@ public class Puzzle{
         Collections.shuffle(alphabet);
         System.out.println(alphabet);
         System.out.println(alphabet.get(25));
+        ArrayList<String> newArr = new ArrayList<String>();
+        newArr.add("aaa");
+        newArr.add("bbb");
+        newArr.add("ccc");
+        newArr.add("ddd");
+        System.out.println(newArr);
+        Collections.shuffle(newArr);
+        System.out.println(newArr);
+
 
         int randomNumber = r.nextInt(25);
         System.out.println(alphabet.get(randomNumber));
