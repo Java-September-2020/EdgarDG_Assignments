@@ -1,0 +1,20 @@
+@charset "ISO-8859-1";
+body {
+	background-color: lightblue;
+}
+a {
+	margin: 400px 0 0 450px;
+	display: inline-block;
+	font-size: 40px;
+	
+}
+h1 {
+	margin: 400px 0 0 450px;
+	font-size: 50px;
+	color: blue;
+}
+h2 {
+	margin: 400px 0 0 450px;
+	font-size: 50px;
+	color: green;
+}
