@@ -1,0 +1,24 @@
+@charset "ISO-8859-1";
+body {
+	background-color: lightblue;
+}
+div {
+	width: 350px;
+	heigh: auto;
+	margin: auto;
+	margin-top: 250px;
+	text-align: center;
+}
+p {
+	font-size: 30px;
+	color: red;
+}
+button {
+	margin: auto;
+	margin-top: 20px;
+	display: block;
+}
+li {
+	font-size: 30px;
+	color: purple;
+}
