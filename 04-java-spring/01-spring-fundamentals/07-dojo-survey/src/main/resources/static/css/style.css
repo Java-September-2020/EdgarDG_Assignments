@@ -1,0 +1,16 @@
+@charset "ISO-8859-1";
+div {
+	width: 350px;
+	length: auto;
+	margin: auto;
+	margin-top: 100px;
+	border: 3px solid black;
+}
+button {
+	margin: 20px;
+	margin-left: 270px;
+}
+p {
+	margin-left: 50px;
+	display: inline-block;
+}
