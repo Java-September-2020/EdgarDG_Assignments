@@ -1,4 +1,4 @@
-package com.codingdojo.football.controller;
+package com.codingdojo.football.controllers;
 
 import java.util.List;
 
@@ -11,10 +11,11 @@ import com.codingdojo.football.models.Team;
 import com.codingdojo.football.services.TeamService;
 
 @RestController
-public class TeamController {
+@RequestMapping("/api")
+public class APITeamController {
 	private TeamService tService;
 	
-	public TeamController(TeamService service) {
+	public APITeamController(TeamService service) {
 		this.tService = service;
 	}
 	

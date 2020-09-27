@@ -17,7 +17,6 @@ public class Team {
 	private int players;
 	
 	public Team() {
-		super();
 	}
 	public Long getId() {
 		return id;
