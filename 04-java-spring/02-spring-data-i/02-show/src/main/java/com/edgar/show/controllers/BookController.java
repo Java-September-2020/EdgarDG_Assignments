@@ -2,6 +2,8 @@ package com.edgar.show.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,24 +29,24 @@ public class BookController {
 	}
 	
 	@RequestMapping("/add")
-	public String addBook(@ModelAttribute("book") Book book) {
+	public String addBook(@Valid @ModelAttribute("book") Book book) {
 		return "add.jsp";
 	}
 	
 	@RequestMapping("/{id}")
-	public String getBook(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("book") Book book) {
+	public String getBook(@PathVariable("id") Long id, Model viewModel,@Valid @ModelAttribute("book") Book book) {
 		viewModel.addAttribute("book", this.bservice.getOneBook(id));
 		return "show.jsp";
 	}
 
 	@RequestMapping("/books/{id}/edit")
-	public String editBook(@PathVariable("id") Long id, @ModelAttribute("book") Book book, Model viewModel) {
+	public String editBook(@PathVariable("id") Long id,@Valid @ModelAttribute("book") Book book, Model viewModel) {
 		viewModel.addAttribute("book", this.bservice.getOneBook(id));
 		return "edit.jsp";
 	}
 	
 	@PostMapping("/book")
-	public String addBook(@ModelAttribute("book") Book newBook, BindingResult result) {
+	public String addBook(@Valid @ModelAttribute("book") Book newBook, BindingResult result) {
 		if (result.hasErrors()) {
 			return "add.jsp";
 		} else {
@@ -54,7 +56,7 @@ public class BookController {
 	}
 	
 	@PostMapping("/edit/{id}")
-	public String editBook(@PathVariable("id") Long id, @ModelAttribute("book") Book updatedBook, BindingResult result) {
+	public String editBook(@PathVariable("id") Long id,@Valid @ModelAttribute("book") Book updatedBook, BindingResult result) {
 		if (result.hasErrors()) {
 			return "edit.jsp";
 		} else {
@@ -64,7 +66,7 @@ public class BookController {
 	}
 	
 	@PostMapping("/delete/{id}")
-	public String deleteBook(@PathVariable("id") Long id, @ModelAttribute("book") Book updatedBook, BindingResult result) {
+	public String deleteBook(@PathVariable("id") Long id,@Valid @ModelAttribute("book") Book updatedBook, BindingResult result) {
 		if (result.hasErrors()) {
 			return "edit.jsp";
 		} else {

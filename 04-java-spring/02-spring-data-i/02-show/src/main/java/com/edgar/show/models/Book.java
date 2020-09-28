@@ -5,6 +5,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="books")
@@ -13,11 +15,19 @@ public class Book {
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 
 	private Long id;
-	private String title;
-	private String description;
-	private String language;
-	private int pages;
-	public Book() {
+	@Size(min = 3, max = 20)
+    private String title;
+    
+    @Size(min = 5, max = 200)
+    private String description;
+    
+    @Size(min = 3, max = 40)
+    private String language;
+    
+    @Min(100)
+    private int pages;
+    
+    public Book() {
 	}
 	public Long getId() {
 		return id;
