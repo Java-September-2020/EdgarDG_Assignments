@@ -2,8 +2,13 @@ package com.edgar.show.controllers;
 
 import java.util.List;
 
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.edgar.show.models.Book;
@@ -28,6 +33,17 @@ public class APIBookController {
 		return this.bservice.getOneBook(id);
 	}
 	
+	@RequestMapping(value="/edit/{id}", method=RequestMethod.PUT)
+	public Book editBook(@PathVariable("id") Long id, @ModelAttribute("book") Book updatedBook) {
+			return this.bservice.updateBook(updatedBook);
+		}
+
+	
+	@RequestMapping(value="/delete/{id}", method=RequestMethod.DELETE)
+	public String deleteBook(@PathVariable("id") Long id, @ModelAttribute("book") Book updatedBook) {
+			this.bservice.deleteBook(id);
+			return id + " has been deleted from the database.";
+				}	
 	
 	
 }
