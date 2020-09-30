@@ -20,13 +20,14 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Song {
 	@Id
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
+	private Long id;
 	
-	@NotBlank(message="Must not be blank")
 	@Size(min=5, message="Title must be 5 characters minimum")
+	@NotBlank(message="Must not be blank")
 	private String title;
 
-	@NotBlank(message="Must not be blank")
 	@Size(min=5, message="Artist must be 5 characters minimum")
+	@NotBlank(message="Must not be blank")
 	private String artist;
 	
 	//Will be drop down from 1-10
@@ -53,6 +54,13 @@ public class Song {
 	public Song() {
 	}
 
+	
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
 	public String getTitle() {
 		return title;
 	}
