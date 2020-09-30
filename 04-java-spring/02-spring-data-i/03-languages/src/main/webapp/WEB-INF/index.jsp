@@ -14,7 +14,7 @@
 <h1>Coding Languages</h1>
 <h3>Let's Code!</h3>
 
-<table class="table">
+<table class="table table-dark">
 <thead>
 <td>Name</td>
 <td>Creator</td>
@@ -35,8 +35,13 @@
 </tbody>
 </table>
 
-<form:form method="POST" action="/new" modelAttribute="language">
+<c:forEach items="${errors}" var="err">
+<p>${err}</p>
+</c:forEach>
 
+<form:form action="/languages" method="POST" modelAttribute="language">
+
+<div class="form-data">
 <p>
 <form:label path="name">Name: 
 <form:errors path="name"/>
@@ -60,6 +65,7 @@
 
 
 <button>Submit</button>
+</div>
 </form:form>
 </div>
 </body>
