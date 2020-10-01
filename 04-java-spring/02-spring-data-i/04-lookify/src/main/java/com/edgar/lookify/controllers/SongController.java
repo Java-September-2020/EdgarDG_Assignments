@@ -36,7 +36,9 @@ public class SongController {
 	}
 	
 	@RequestMapping("/search/{artist}")
-	public String search(@PathVariable("artist") String artist) {
+	public String search(@PathVariable("artist") String artist, Model viewModel) {
+		List<Song> artistSongs = this.sService.getArtistSongs(artist);
+		viewModel.addAttribute("artistSongs", artistSongs);
 		return "search.jsp";
 	}
 	

@@ -23,6 +23,11 @@ public class SongService {
 		return this.sRepo.findById(id).orElse(null);
 	}
 	
+	//Get All Songs By Artist
+	public List<Song> getArtistSongs(String search) {
+		return this.sRepo.findByArtistContaining(search);
+	}
+	
 	//Save New Song
 	public Song createSong(Song newSong) {
 		return this.sRepo.save(newSong);

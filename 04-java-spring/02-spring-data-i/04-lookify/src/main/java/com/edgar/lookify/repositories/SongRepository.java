@@ -10,4 +10,5 @@ import com.edgar.lookify.models.Song;
 @Repository
 public interface SongRepository extends CrudRepository <Song, Long> {
 	List<Song> findAll();
+	List<Song> findByArtistContaining(String search);
 }

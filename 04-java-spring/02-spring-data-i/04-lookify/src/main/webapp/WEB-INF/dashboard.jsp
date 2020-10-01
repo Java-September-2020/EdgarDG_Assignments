@@ -13,16 +13,18 @@
 <div class="container">
 <hr>
 <a href="/songs/new">Add New</a>
+<br>
 <a href="/search/topTen">Top Songs</a>
 
-<p>Search</p>
+<p>Artist</p>
 <button>New Search</button>
+
 <hr>
 <table class="table table-dark">
 <thead>
 <td>Title</td>
 <td>Rating</td>
-<td>Action</td>
+<td>Actions</td>
 </thead>
 
 <tbody>
