@@ -22,11 +22,11 @@ public class Song {
 	@GeneratedValue (strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Size(min=5, message="Title must be 5 characters minimum")
+	@Size(min=2, message="Must be 2 characters minimum")
 	@NotBlank(message="Must not be blank")
 	private String title;
 
-	@Size(min=5, message="Artist must be 5 characters minimum")
+	@Size(min=2, message="Must be 2 characters minimum")
 	@NotBlank(message="Must not be blank")
 	private String artist;
 	

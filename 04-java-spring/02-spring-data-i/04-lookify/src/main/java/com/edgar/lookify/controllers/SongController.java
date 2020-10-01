@@ -2,9 +2,14 @@ package com.edgar.lookify.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,10 +35,6 @@ public class SongController {
 		return "dashboard.jsp";
 	}
 	
-	//FlashError Reload
-	@PostMapping("/dashboard")
-	//Create Flash Reload
-	
 	@RequestMapping("/search/{artist}")
 	public String search(@PathVariable("artist") String artist) {
 		return "search.jsp";
@@ -45,30 +46,31 @@ public class SongController {
 	}
 	
 	@RequestMapping("/songs/{id}")
-	public String details(@PathVariable("id") Long id) {
+	public String details(@ModelAttribute("song") Song song, @PathVariable("id") Long id, Model viewModel) {
+		viewModel.addAttribute("song", this.sService.getOneSong(id));
 		return "details.jsp";
 	}
 	
 	@RequestMapping("/songs/new")
-	public String createSong() {
+	public String createSong(@ModelAttribute("song") Song song) {
 		return "addSong.jsp";
 	}
 
 	//New Song Logic
-	@PostMapping("/new")
-	public String newSong() {
-		return "redirect:/dashboard";
-	}
-	
-	//Update Song Logic
-	@PostMapping("/edit")
-	public String editSong() {
-		return "redirect:/dashboard";
+	@PostMapping("/songs/new")
+	public String newSong(@Valid @ModelAttribute("song") Song newSong, BindingResult result) {
+		if(result.hasErrors()) {
+			return "addSong.jsp";
+		} else {
+			this.sService.createSong(newSong);
+			return "redirect:/dashboard";
+		}
 	}
 	
 	//Delete Song Logic
-	@PostMapping("/delete")
-	public String deleteSong() {
+	@GetMapping("/delete/{id}")
+	public String deleteSong(@PathVariable("id") Long id) {
+		this.sService.deleteSong(id);
 		return "redirect:/dashboard";
 	}
 

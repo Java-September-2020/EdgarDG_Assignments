@@ -11,10 +11,31 @@
 </head>
 <body>
 <div class="container">
+<hr>
+<a href="/songs/new">Add New</a>
+<a href="/search/topTen">Top Songs</a>
 
+<p>Search</p>
+<button>New Search</button>
+<hr>
+<table class="table table-dark">
+<thead>
+<td>Title</td>
+<td>Rating</td>
+<td>Action</td>
+</thead>
 
+<tbody>
+<c:forEach items="${allSongs}" var="song">
+<tr>
+<td><a href="/songs/${song.id}">${song.title}</a></td>
+<td>${song.rating}</td>
+<td><a href="/delete/${song.id}">Delete</a></td>
+</tr>
+</c:forEach>
+</tbody>
 
-
+</table>
 </div>
 </body>
 </html>
