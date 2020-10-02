@@ -24,8 +24,13 @@ public class SongService {
 	}
 	
 	//Get All Songs By Artist
-	public List<Song> getArtistSongs(String search) {
-		return this.sRepo.findByArtistContaining(search);
+	public List<Song> getArtistSongs(String artistName) {
+		return this.sRepo.findByArtistContaining(artistName);
+	}
+	
+	//Top 10 Sorted By Rating
+	public List<Song> topTenByRating() {
+		return this.sRepo.findTop10ByOrderByRatingDesc();
 	}
 	
 	//Save New Song

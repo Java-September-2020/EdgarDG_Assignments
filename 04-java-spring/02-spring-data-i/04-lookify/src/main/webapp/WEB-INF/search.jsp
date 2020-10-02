@@ -13,7 +13,17 @@
 <div class="container">
 
 <hr>
-<table class="table table-dark">
+<p>Songs by Artist: ${artist}</p>
+
+<form action="/search" class="float-right">
+<input type="text" name="artist"/>
+<button class="btn btn-primary">Search Artists</button>
+</form>
+
+<a href="/dashboard">Dashboard</a>
+
+<hr>
+<table class="table table-hover">
 <thead>
 <td>Title</td>
 <td>Rating</td>
@@ -25,7 +35,7 @@
 <tr>
 <td><a href="/songs/${song.id}">${song.title}</a></td>
 <td>${song.rating}</td>
-<td><a href="/delete/${song.id}">Delete</a></td>
+<td><a class="btn btn-danger" href="/delete/${song.id}">Delete</a></td>
 </tr>
 </c:forEach>
 </tbody>

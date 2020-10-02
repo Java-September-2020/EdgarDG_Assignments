@@ -12,15 +12,15 @@
 <body>
 <div class="container">
 <hr>
-<a href="/songs/new">Add New</a>
-<br>
-<a href="/search/topTen">Top Songs</a>
+<h4><a href="/songs/new">Add New</a> | <a href="/search/topTen">Top Songs</a></h4>
 
-<p>Artist</p>
-<button>New Search</button>
+<form action="/search" class="float-right">
+<input type="text" name="artist"/>
+<button class="btn btn-primary">Search Artists</button>
+</form>
 
 <hr>
-<table class="table table-dark">
+<table class="table table-hover">
 <thead>
 <td>Title</td>
 <td>Rating</td>
@@ -32,7 +32,7 @@
 <tr>
 <td><a href="/songs/${song.id}">${song.title}</a></td>
 <td>${song.rating}</td>
-<td><a href="/delete/${song.id}">Delete</a></td>
+<td><a class="btn btn-danger" href="/delete/${song.id}">Delete</a></td>
 </tr>
 </c:forEach>
 </tbody>

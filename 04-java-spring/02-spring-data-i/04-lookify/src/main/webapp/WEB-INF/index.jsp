@@ -12,9 +12,9 @@
 <body>
 <div class="container">
 <h1>Welcome to Lookify!</h1>
-
-<a href="/dashboard">Start Looking</a>
+<div class="flexin">
+<a class="btn btn-primary" href="/dashboard">Start Looking</a>
 </div>
-
+</div>
 </body>
 </html>

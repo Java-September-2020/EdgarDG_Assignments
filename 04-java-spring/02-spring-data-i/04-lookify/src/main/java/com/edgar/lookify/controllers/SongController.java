@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.edgar.lookify.models.Song;
 import com.edgar.lookify.services.SongService;
@@ -35,15 +36,17 @@ public class SongController {
 		return "dashboard.jsp";
 	}
 	
-	@RequestMapping("/search/{artist}")
-	public String search(@PathVariable("artist") String artist, Model viewModel) {
-		List<Song> artistSongs = this.sService.getArtistSongs(artist);
-		viewModel.addAttribute("artistSongs", artistSongs);
+	@RequestMapping("/search")
+	public String Search(@RequestParam("artist") String artist, Model model) {
+		model.addAttribute("artistSongs", sService.getArtistSongs(artist));
+		model.addAttribute("artist", artist);
 		return "search.jsp";
 	}
 	
 	@RequestMapping("/search/topTen")
-	public String topTen() {
+	public String topTen(Model viewModel) {
+		List<Song> allSongs = this.sService.topTenByRating();
+		viewModel.addAttribute("allSongs", allSongs);
 		return "topTen.jsp";
 	}
 	
