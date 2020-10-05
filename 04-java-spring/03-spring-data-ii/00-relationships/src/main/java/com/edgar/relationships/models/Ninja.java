@@ -1,8 +1,5 @@
 package com.edgar.relationships.models;
 
-import java.util.Date;
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -13,7 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity
 @Table(name="ninjas")
@@ -26,12 +22,8 @@ public class Ninja {
 	@NotBlank(message="Must not be blank")
 	private String lastName;
 	@NotNull(message="Must not be blank")
-	@Size(min=3,max=99)
 	private int age;
 	
-	@Column(updatable=false)
-	private Date createdAt;
-	private Date updatedAt;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="dojo_id")
 	private Dojo dojo;
@@ -69,22 +61,6 @@ public class Ninja {
 
 	public void setAge(int age) {
 		this.age = age;
-	}
-
-	public Date getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setCreatedAt(Date createdAt) {
-		this.createdAt = createdAt;
-	}
-
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
 	}
 
 	public Dojo getDojo() {
