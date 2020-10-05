@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%> 
+    <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,26 +13,42 @@
 <div class="container">
 <h1>Welcome to Football dot Com</h1>
 <hr>
-<table class="table">
+<a href="/add">Add a New Team</a> | <a href="/players">Add Player To Team</a>
+<table class="table table-dark">
 <thead>
 <th>id</th>
 <th>Name</th>
 <th>City</th>
 <th>Number of Players</th>
+<th>Mascot</th>
 </thead>
-
 <tbody>
+
 <c:forEach items="${allTeams}" var="team">
 <tr>
-<td><a href="/${team.id}">${team.id}</a></td>
-<td>${team.name}</td>
+<td>${team.id}</td>
+<td><a href="/${team.id}">${team.name }</a></td>
 <td>${team.city}</td>
-<td>${team.players}</td>
+<td>${team.players }</td>
+<td>
+<c:choose>
+<c:when test="${team.mascot != null}">
+
+${team.mascot.color} ${team.mascot.name}
+</c:when>
+<c:otherwise>
+Does Not Have Mascot
+</c:otherwise>
+</c:choose>
+</td>
 </tr>
 </c:forEach>
+
 </tbody>
 </table>
 
-</div>	
+
+
+</div>
 </body>
 </html>
