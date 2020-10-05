@@ -38,6 +38,7 @@ public class DojoController {
 	
 	@RequestMapping("/{id}")
 	public String showDojo(@PathVariable("id") Long id, Model dModel) {
+		System.out.println(this.dService.getOneDojo(id));
 		dModel.addAttribute("dojo", this.dService.getOneDojo(id));
 		return "showDojo.jsp";
 	}

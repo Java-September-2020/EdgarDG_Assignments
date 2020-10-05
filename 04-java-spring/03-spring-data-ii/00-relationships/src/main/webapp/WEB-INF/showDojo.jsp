@@ -21,10 +21,12 @@
 </thead>
 
 <tbody>
-<c:forEach items="${dojo.ninja}" var="ninja">
+<c:forEach items="${dojo.ninjas}" var="ninja">
+<tr>
 <td>${ninja.firstName}</td>
 <td>${ninja.lastName}</td>
 <td>${ninja.age}</td>
+</tr>
 </c:forEach>
 </tbody>
 
