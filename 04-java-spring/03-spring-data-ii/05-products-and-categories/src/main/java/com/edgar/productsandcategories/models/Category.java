@@ -23,6 +23,7 @@ public class Category {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
+	
 	@Column(updatable=false)
 	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;

@@ -2,7 +2,6 @@ package com.edgar.productsandcategories.models;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Locale.Category;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -26,7 +25,7 @@ public class Product {
 	private String name;
 	private String description;
 	private float price;
-	
+
 	@Column(updatable=false)
 	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;
@@ -40,8 +39,8 @@ public class Product {
 			inverseJoinColumns = @JoinColumn(name = "category_id")
 			)
 	private List<Category> categories;
- 
-	
+
+
 	public Product() {
 	}
 
