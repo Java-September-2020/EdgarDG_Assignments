@@ -1,5 +1,7 @@
 package com.edgar.productsandcategories.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +45,10 @@ public class HomeController {
 	
 	//Products View
 	@RequestMapping("/products/{id}")
-	public String viewProduct(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("product") Product product) {
+	public String viewProduct(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("product") Product product, Model cModel) {
 		viewModel.addAttribute("product", this.pService.findOneProduct(id));
+		List<Category> allCategories = this.cService.findAllCategories();
+		cModel.addAttribute("allCategories", allCategories);
 		return "product.jsp";
 	}
 	

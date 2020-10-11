@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Product Page</title>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
 </head>
 <body>
@@ -25,21 +25,9 @@
 </c:forEach>
 </ul>
 
-<div class="float-right">
-<form:form>
-<form:label path="category"> Add Category:        
-<form:errors path="category"/>
-<form:select path="category">
-<c:forEach items="${category}" var="category">
-<option value="${category.id}">${category.name}</option>
+<c:forEach items="${ allCategories }" var="category">
+<p>${ category.name }</p>
 </c:forEach>
-</form:select>
-</form:label>
-</form:form>
-
-</div>
-
-
 </div>
 
 </body>
