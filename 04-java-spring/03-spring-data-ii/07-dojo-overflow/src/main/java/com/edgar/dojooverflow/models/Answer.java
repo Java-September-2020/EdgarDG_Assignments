@@ -1,9 +1,7 @@
 package com.edgar.dojooverflow.models;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,9 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -22,31 +18,24 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="questions")
-public class Question {
+@Table(name="answers")
+public class Answer {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotBlank
-	private String question;
-
-	@Column(updatable=false)
-	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
-	private Date createdAt;
-	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
-	private Date updatedAt;
-
-	@OneToMany(mappedBy="question",cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Answer> answers;
+	private String answer;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-			name="questions_tags",
-			joinColumns=@JoinColumn(name="question_id"),
-			inverseJoinColumns=@JoinColumn(name="tag_id")
-			)
-	private List<Tag> tags;
+	@Column(updatable=false)
+	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm:ss")
+	private Date createdAt;
+	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm:ss")
+	private Date updatedAt;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="question_id")
+	private Question question;
 	
 	@PrePersist
 	protected void onCreate() {
@@ -58,7 +47,7 @@ public class Question {
 		this.updatedAt = new Date();
 	}
 
-	public Question() {
+	public Answer() {
 	}
 
 	public Long getId() {
@@ -68,13 +57,13 @@ public class Question {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public String getQuestion() {
-		return question;
+
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setQuestion(String question) {
-		this.question = question;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
 	public Date getCreatedAt() {
@@ -93,24 +82,16 @@ public class Question {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Answer> getAnswers() {
-		return answers;
+	public Question getQuestion() {
+		return question;
 	}
 
-	public void setAnswers(List<Answer> answers) {
-		this.answers = answers;
-	}
-
-	public List<Tag> getTags() {
-		return tags;
-	}
-
-	public void setTags(List<Tag> tags) {
-		this.tags = tags;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 	
 	
 	
 	
-
+	
 }
