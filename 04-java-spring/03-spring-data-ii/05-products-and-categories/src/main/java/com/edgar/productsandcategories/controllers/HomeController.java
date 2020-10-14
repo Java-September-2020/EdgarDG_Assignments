@@ -25,9 +25,8 @@ public class HomeController {
 	private ProductService pService;
 	@Autowired
 	private CategoryService cService;
-	
-	
-	//Products New
+
+	// Products New
 	@RequestMapping("/products/new")
 	public String newProductForm(@ModelAttribute("product") Product product) {
 		return "newProduct.jsp";
@@ -40,23 +39,24 @@ public class HomeController {
 		} else {
 			this.pService.createProduct(newProduct);
 			return "redirect:/products/new";
-		}		
+		}
 	}
 
-	
-	//Products View
+	// Products View
 	@RequestMapping("/products/{id}")
-	public String viewProduct(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("product") Product product, Model cModel) {
+	public String viewProduct(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("product") Product product,
+			Model cModel) {
 		Product thisProduct = this.pService.findOneProduct(id);
 		viewModel.addAttribute("product", thisProduct);
 		List<Category> notInProduct = this.cService.categoriesNotInProduct(thisProduct);
 		viewModel.addAttribute("notInProduct", notInProduct);
 		return "product.jsp";
 	}
-	
-	//Add Category to Product
+
+	// Add Category to Product
 	@PostMapping("/products/{id}")
-	public String addCategoryToP(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Long id, Model viewModel, @RequestParam("categoryId") Long categoryId) {
+	public String addCategoryToP(@Valid @ModelAttribute("category") Category category, BindingResult result,
+			@PathVariable("id") Long id, Model viewModel, @RequestParam("categoryId") Long categoryId) {
 		if (result.hasErrors()) {
 			Product thisProduct = this.pService.findOneProduct(id);
 			viewModel.addAttribute("product", thisProduct);
@@ -71,14 +71,12 @@ public class HomeController {
 		}
 	}
 
-	
-	
-	//Categories New
+	// Categories New
 	@RequestMapping("/categories/new")
 	public String newCategoryForm(@ModelAttribute("category") Category category) {
 		return "newCategory.jsp";
 	}
-	
+
 	@PostMapping("/categories/new")
 	public String newCategory(@Valid @ModelAttribute("category") Category newCategory, BindingResult result) {
 		if (result.hasErrors()) {
@@ -89,8 +87,7 @@ public class HomeController {
 		}
 	}
 
-	
-	//Categories View
+	// Categories View
 	@RequestMapping("/categories/{id}")
 	public String viewCategory(@PathVariable("id") Long id, Model viewModel) {
 		Category thisCategory = this.cService.findOneCategory(id);
@@ -99,21 +96,22 @@ public class HomeController {
 		viewModel.addAttribute("notInCategory", notInCategory);
 		return "category.jsp";
 	}
-	
+
 	@PostMapping("/categories/{id}")
-	public String addProductToC(@Valid @ModelAttribute("product") Product product, BindingResult result, @PathVariable("id") Long id, Model viewModel, @RequestParam("productId") Long productId) {
-		if(result.hasErrors()) {
+	public String addProductToC(@Valid @ModelAttribute("product") Product product, BindingResult result,
+			@PathVariable("id") Long id, Model viewModel, @RequestParam("productId") Long productId) {
+		if (result.hasErrors()) {
 			Category thisCategory = this.cService.findOneCategory(id);
 			viewModel.addAttribute("category", thisCategory);
 			List<Product> notInCategory = this.pService.productsNotInCategory(thisCategory);
 			viewModel.addAttribute("notInCategory", notInCategory);
 			return "category.jsp";
 		} else {
-		Category category = cService.findOneCategory(id);
-		Product thisProduct = pService.findOneProduct(productId);
-		this.cService.addCategory(category, thisProduct);		
-		return "redirect:/categories/{id}";
+			Category category = cService.findOneCategory(id);
+			Product thisProduct = pService.findOneProduct(productId);
+			this.cService.addCategory(category, thisProduct);
+			return "redirect:/categories/{id}";
 		}
 	}
-	
+
 }
