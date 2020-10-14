@@ -20,41 +20,43 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="tags")
+@Table(name = "tags")
 public class Tag {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
-	//Need to validate comma-separation
-	//Need to validate lowercase input
+	// Need to validate comma-separation
+	// Need to validate lowercase input
 	private String tag;
-	
-	@Column(updatable=false)
-	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
+
+	@Column(updatable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;
-	@DateTimeFormat(pattern="yyyy-MM-DD HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
-	
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(
-			name = "questions_tags",
-			joinColumns = @JoinColumn(name="tag_id"),
-			inverseJoinColumns = @JoinColumn(name="question_id")
-			)
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
 	private List<Question> questions;
-	
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
 	}
+
 	@PreUpdate
 	protected void onUpdate() {
 		this.updatedAt = new Date();
 	}
 
 	public Tag() {
+	}
+
+	// Overloaded to create custom Validation
+	public Tag(String tag) {
+		this.tag = tag;
 	}
 
 	public Long getId() {
@@ -96,8 +98,5 @@ public class Tag {
 	public void setQuestions(List<Question> questions) {
 		this.questions = questions;
 	}
-	
-	
 
-	
 }

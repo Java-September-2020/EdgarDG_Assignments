@@ -18,30 +18,30 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="answers")
+@Table(name = "answers")
 public class Answer {
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@NotBlank
 	private String answer;
-	
-	@Column(updatable=false)
-	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm:ss")
+
+	@Column(updatable = false)
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
 	private Date createdAt;
-	@DateTimeFormat(pattern="YYYY-MM-DD HH:mm:ss")
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
 	private Date updatedAt;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="question_id")
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
 	private Question question;
-	
+
 	@PrePersist
 	protected void onCreate() {
 		this.createdAt = new Date();
 	}
-	
+
 	@PreUpdate
 	protected void onUpdate() {
 		this.updatedAt = new Date();
@@ -89,9 +89,5 @@ public class Answer {
 	public void setQuestion(Question question) {
 		this.question = question;
 	}
-	
-	
-	
-	
-	
+
 }
