@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.edgar.productsandcategories.models.Category;
 import com.edgar.productsandcategories.models.Product;
 import com.edgar.productsandcategories.repositories.ProductRepository;
 
@@ -30,5 +31,13 @@ public class ProductService {
 		Product product = this.pRepo.findById(id).orElse(null);
 		return product;
 	}
+	
+	//List of Products not in Category
+	public List<Product> productsNotInCategory(Category category) {
+		return pRepo.findByCategoriesNotContaining(category);
+	}
+
+	
+	
 	
 }

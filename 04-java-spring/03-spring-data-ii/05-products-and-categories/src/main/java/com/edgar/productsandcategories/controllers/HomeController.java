@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.edgar.productsandcategories.models.Category;
 import com.edgar.productsandcategories.models.Product;
@@ -46,21 +47,31 @@ public class HomeController {
 	//Products View
 	@RequestMapping("/products/{id}")
 	public String viewProduct(@PathVariable("id") Long id, Model viewModel, @ModelAttribute("product") Product product, Model cModel) {
-		viewModel.addAttribute("product", this.pService.findOneProduct(id));
-		List<Category> allCategories = this.cService.findAllCategories();
-		cModel.addAttribute("allCategories", allCategories);
+		Product thisProduct = this.pService.findOneProduct(id);
+		viewModel.addAttribute("product", thisProduct);
+		List<Category> notInProduct = this.cService.categoriesNotInProduct(thisProduct);
+		viewModel.addAttribute("notInProduct", notInProduct);
 		return "product.jsp";
 	}
 	
+	//Add Category to Product
 	@PostMapping("/products/{id}")
-	public String addCategoryToP(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Long id) {
+	public String addCategoryToP(@Valid @ModelAttribute("category") Category category, BindingResult result, @PathVariable("id") Long id, Model viewModel, @RequestParam("categoryId") Long categoryId) {
 		if (result.hasErrors()) {
+			Product thisProduct = this.pService.findOneProduct(id);
+			viewModel.addAttribute("product", thisProduct);
+			List<Category> notInProduct = this.cService.categoriesNotInProduct(thisProduct);
+			viewModel.addAttribute("notInProduct", notInProduct);
 			return "redirect:/products/{id}";
 		} else {
+			Product product = pService.findOneProduct(id);
+			Category thisCategory = cService.findOneCategory(categoryId);
+			this.cService.addCategory(thisCategory, product);
 			return "redirect:/products/{id}";
 		}
 	}
 
+	
 	
 	//Categories New
 	@RequestMapping("/categories/new")
@@ -82,15 +93,27 @@ public class HomeController {
 	//Categories View
 	@RequestMapping("/categories/{id}")
 	public String viewCategory(@PathVariable("id") Long id, Model viewModel) {
-		viewModel.addAttribute("product", this.cService.findOneCategory(id));
-		return "product.jsp";
+		Category thisCategory = this.cService.findOneCategory(id);
+		viewModel.addAttribute("category", thisCategory);
+		List<Product> notInCategory = this.pService.productsNotInCategory(thisCategory);
+		viewModel.addAttribute("notInCategory", notInCategory);
+		return "category.jsp";
 	}
 	
 	@PostMapping("/categories/{id}")
-	public String addProductToC() {
-		return "redirect:/categories/new";
+	public String addProductToC(@Valid @ModelAttribute("product") Product product, BindingResult result, @PathVariable("id") Long id, Model viewModel, @RequestParam("productId") Long productId) {
+		if(result.hasErrors()) {
+			Category thisCategory = this.cService.findOneCategory(id);
+			viewModel.addAttribute("category", thisCategory);
+			List<Product> notInCategory = this.pService.productsNotInCategory(thisCategory);
+			viewModel.addAttribute("notInCategory", notInCategory);
+			return "category.jsp";
+		} else {
+		Category category = cService.findOneCategory(id);
+		Product thisProduct = pService.findOneProduct(productId);
+		this.cService.addCategory(category, thisProduct);		
+		return "redirect:/categories/{id}";
+		}
 	}
-
-	
 	
 }
