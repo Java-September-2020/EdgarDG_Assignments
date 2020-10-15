@@ -3,6 +3,7 @@ package com.edgar.dojooverflow.models;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -12,24 +13,24 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "tags")
-public class Tag {
+@Table(name = "questions")
+public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	//@NotBlank
-	//@Pattern(regexp="^(([a-zA-Z\\s])+$|([a-zA-Z\\s]+,)[a-zA-Z\\s]+){1,2}$", message="Maximum three Tags, commas must separate")
-	private String tag;
+	@NotBlank
+	private String question;
 
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
@@ -37,26 +38,31 @@ public class Tag {
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
-	private List<Question> questions;
-
 	@PrePersist
-	protected void onCreate() {
+	protected void OnCreate() {
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
-	protected void onUpdate() {
+	protected void OnUpdate() {
 		this.updatedAt = new Date();
 	}
 
-	public Tag() {
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Answer> answers;
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
+
+	@Size(max = 3)
+	private List<Tag> tags;
+	@Pattern(regexp = "^(([a-z])+$|([a-z]+,)[a-z]+){1,2}$", message = "Tags must be lowercase, seperated by commas, max of 3")
+	private String tagString;
+
+	public Question() {
 	}
 
-	// Overloaded to create custom Validation
-	public Tag(String tag) {
-		this.tag = tag;
+	public String[] splitTags() {
+		return this.tagString.split(",");
 	}
 
 	public Long getId() {
@@ -67,12 +73,12 @@ public class Tag {
 		this.id = id;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getQuestion() {
+		return question;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setQuestion(String question) {
+		this.question = question;
 	}
 
 	public Date getCreatedAt() {
@@ -91,12 +97,28 @@ public class Tag {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	public List<Answer> getAnswers() {
+		return answers;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setAnswers(List<Answer> answers) {
+		this.answers = answers;
+	}
+
+	public List<Tag> getTags() {
+		return tags;
+	}
+
+	public void setTags(List<Tag> tags) {
+		this.tags = tags;
+	}
+
+	public String getTagString() {
+		return tagString;
+	}
+
+	public void setTagString(String tagString) {
+		this.tagString = tagString;
 	}
 
 }

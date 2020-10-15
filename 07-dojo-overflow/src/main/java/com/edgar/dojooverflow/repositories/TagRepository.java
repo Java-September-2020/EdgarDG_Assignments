@@ -11,5 +11,6 @@ import com.edgar.dojooverflow.models.Tag;
 @Repository
 public interface TagRepository extends CrudRepository<Tag, Long> {
 	List<Tag> findAll();
-	Optional<Tag> findByTagIs(String name);
+
+	Optional<Tag> findByTag(String tag);
 }

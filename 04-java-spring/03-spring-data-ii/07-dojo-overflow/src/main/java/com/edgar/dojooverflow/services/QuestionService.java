@@ -19,6 +19,12 @@ public class QuestionService {
 		Question question = this.qRepo.save(newQuestion);
 		return question;
 	}
+	
+	// Create a Question Overload
+	public Question createQuestion(String question, List<Tag> tags) {
+		Question newQuestion = new Question(question, tags);
+		return newQuestion;
+	}
 
 	// Add Tag to Question
 	public void addTagtoQuestion(Question question, Tag tag) {

@@ -28,7 +28,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@NotBlank
+	//@NotBlank
 	private String question;
 
 	@Column(updatable = false)
@@ -58,8 +58,9 @@ public class Question {
 	}
 
 	// Overloaded so we can create custom Validation
-	public Question(String question) {
+	public Question(String question, List<Tag> tags) {
 		this.question = question;
+		this.tags = tags;
 	}
 
 	public Long getId() {

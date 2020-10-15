@@ -1,5 +1,7 @@
 package com.edgar.dojooverflow.services;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +13,15 @@ public class TagService {
 	@Autowired
 	private TagRepository tRepo;
 
+	//Fond All Tags
+	public List<Tag> findAllTags() {
+		List<Tag> allTags = this.tRepo.findAll();
+		return allTags;
+	}
+	
 	//Find Tag By Name
 	public Tag findByName(String name) {
-		Tag tag = this.tRepo.findByTagIs(name);
+		Tag tag = this.tRepo.findByTagIs(name).orElse(null);
 		return tag;
 	}
 	

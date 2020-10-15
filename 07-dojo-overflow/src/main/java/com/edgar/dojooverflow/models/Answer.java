@@ -1,7 +1,6 @@
 package com.edgar.dojooverflow.models;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,26 +9,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name = "tags")
-public class Tag {
+@Table(name = "answers")
+public class Answer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	//@NotBlank
-	//@Pattern(regexp="^(([a-zA-Z\\s])+$|([a-zA-Z\\s]+,)[a-zA-Z\\s]+){1,2}$", message="Maximum three Tags, commas must separate")
-	private String tag;
+	@NotBlank
+	private String answer;
 
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
@@ -37,26 +32,21 @@ public class Tag {
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
-	private List<Question> questions;
-
 	@PrePersist
-	protected void onCreate() {
+	protected void OnCreate() {
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
-	protected void onUpdate() {
+	protected void OnUpdate() {
 		this.updatedAt = new Date();
 	}
 
-	public Tag() {
-	}
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
+	private Question question;
 
-	// Overloaded to create custom Validation
-	public Tag(String tag) {
-		this.tag = tag;
+	public Answer() {
 	}
 
 	public Long getId() {
@@ -67,12 +57,12 @@ public class Tag {
 		this.id = id;
 	}
 
-	public String getTag() {
-		return tag;
+	public String getAnswer() {
+		return answer;
 	}
 
-	public void setTag(String tag) {
-		this.tag = tag;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
 
 	public Date getCreatedAt() {
@@ -91,12 +81,12 @@ public class Tag {
 		this.updatedAt = updatedAt;
 	}
 
-	public List<Question> getQuestions() {
-		return questions;
+	public Question getQuestion() {
+		return question;
 	}
 
-	public void setQuestions(List<Question> questions) {
-		this.questions = questions;
+	public void setQuestion(Question question) {
+		this.question = question;
 	}
 
 }

@@ -21,21 +21,42 @@
 	<c:forEach items="${ errors }" var="err">
 	${err}
 	</c:forEach>
-	<form action="/questions/new" method="POST">
+	<form:form action="/questions/new" method="POST" methodAttribute="question">
 	
-	<div class="form-group">
-	<label for="question">Question: </label>
-	<textarea rows="5" cols="50" name="question"></textarea>
-	</div>
+<div class="form form-group">
+<form:label path="question"> Question: 
+<form:errors path="question"/>
+<form:textarea path="question"/>
+</form:label>
+</div>
+
+<div class="form form-group">
+<form:label path="tags"> Tags: 
+<form:errors path="tags"/>
+<form:input path="tags"/>
+</form:label>
+</div>
+
+<button class="btn btn-primary">Submit</button>
+</form:form>
+</div>
 	
-	<div class="form-group">
-	<label for="tag">Tags: </label>
-	<input type="text" name="tag">
-	</div>
 	
-	<button class="btn btn-primary">Submit</button>
+<%-- 	<form action="/questions/new" method="POST"> --%>
 	
-	</form>
+<!-- 	<div class="form-group"> -->
+<!-- 	<label for="question">Question: </label> -->
+<!-- 	<textarea rows="5" cols="50" name="question"></textarea> -->
+<!-- 	</div> -->
+	
+<!-- 	<div class="form-group"> -->
+<!-- 	<label for="tag">Tags: </label> -->
+<!-- 	<input type="text" name="tag"> -->
+<!-- 	</div> -->
+	
+<!-- 	<button class="btn btn-primary">Submit</button> -->
+	
+<%-- 	</form> --%>
 		
 </div>
 
