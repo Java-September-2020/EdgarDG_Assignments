@@ -27,40 +27,40 @@ public class Question {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
-	//@NotBlank
+	@NotBlank
 	private String question;
 
+	
+	@OneToMany(mappedBy = "question", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Answer> answers;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(
+			name = "questions_tags", 
+			joinColumns = @JoinColumn(name = "question_id"), 
+			inverseJoinColumns = @JoinColumn(name = "tag_id")
+			)
+	private List<Tag> tags;
+
+	
 	@Column(updatable = false)
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
 
-	@OneToMany(mappedBy = "question", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	private List<Answer> answers;
-
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "question_id"), inverseJoinColumns = @JoinColumn(name = "tag_id"))
-	private List<Tag> tags;
-
 	@PrePersist
-	protected void onCreate() {
+	protected void OnCreate() {
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
-	protected void onUpdate() {
+	protected void OnUpdate() {
 		this.updatedAt = new Date();
 	}
 
+	
 	public Question() {
-	}
-
-	// Overloaded so we can create custom Validation
-	public Question(String question, List<Tag> tags) {
-		this.question = question;
-		this.tags = tags;
 	}
 
 	public Long getId() {

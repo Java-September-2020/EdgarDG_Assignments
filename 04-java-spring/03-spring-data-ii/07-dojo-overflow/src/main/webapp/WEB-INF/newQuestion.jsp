@@ -15,14 +15,20 @@
 <body>
 
 <div class="container">
-<h1>What is your question?</h1>	
+
 <hr>
-	
-	<c:forEach items="${ errors }" var="err">
-	${err}
-	</c:forEach>
-	<form:form action="/questions/new" method="POST" methodAttribute="question">
-	
+<a href="/questions">Dashboard</a>
+<hr>
+
+
+<h1>What is your question?</h1>
+
+<c:forEach items="${ errors }" var="err">
+${ err }
+</c:forEach>
+
+<form:form action="/questions/new" method="POST" modelAttribute="questions">
+
 <div class="form form-group">
 <form:label path="question"> Question: 
 <form:errors path="question"/>
@@ -30,35 +36,12 @@
 </form:label>
 </div>
 
-<div class="form form-group">
-<form:label path="tags"> Tags: 
-<form:errors path="tags"/>
-<form:input path="tags"/>
-</form:label>
-</div>
+<label>Tags:</label>
+<input type="text" name="tag">
 
 <button class="btn btn-primary">Submit</button>
 </form:form>
-</div>
-	
-	
-<%-- 	<form action="/questions/new" method="POST"> --%>
-	
-<!-- 	<div class="form-group"> -->
-<!-- 	<label for="question">Question: </label> -->
-<!-- 	<textarea rows="5" cols="50" name="question"></textarea> -->
-<!-- 	</div> -->
-	
-<!-- 	<div class="form-group"> -->
-<!-- 	<label for="tag">Tags: </label> -->
-<!-- 	<input type="text" name="tag"> -->
-<!-- 	</div> -->
-	
-<!-- 	<button class="btn btn-primary">Submit</button> -->
-	
-<%-- 	</form> --%>
-		
-</div>
 
+</div>
 </body>
 </html>

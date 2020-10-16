@@ -23,29 +23,28 @@ public class Answer {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-
 	@NotBlank
 	private String answer;
 
 	@Column(updatable = false)
-	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date createdAt;
-	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "question_id")
-	private Question question;
-
 	@PrePersist
-	protected void onCreate() {
+	protected void OnCreate() {
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
-	protected void onUpdate() {
+	protected void OnUpdate() {
 		this.updatedAt = new Date();
 	}
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "question_id")
+	private Question question;
 
 	public Answer() {
 	}

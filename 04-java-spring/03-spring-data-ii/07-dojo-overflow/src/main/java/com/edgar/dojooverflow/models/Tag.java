@@ -16,7 +16,6 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -27,8 +26,7 @@ public class Tag {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	//@NotBlank
-	//@Pattern(regexp="^(([a-zA-Z\\s])+$|([a-zA-Z\\s]+,)[a-zA-Z\\s]+){1,2}$", message="Maximum three Tags, commas must separate")
+	@NotBlank
 	private String tag;
 
 	@Column(updatable = false)
@@ -37,26 +35,21 @@ public class Tag {
 	@DateTimeFormat(pattern = "yyyy-MM-DD HH:mm:ss")
 	private Date updatedAt;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
-	private List<Question> questions;
-
 	@PrePersist
-	protected void onCreate() {
+	protected void OnCreate() {
 		this.createdAt = new Date();
 	}
 
 	@PreUpdate
-	protected void onUpdate() {
+	protected void OnUpdate() {
 		this.updatedAt = new Date();
 	}
 
-	public Tag() {
-	}
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "questions_tags", joinColumns = @JoinColumn(name = "tag_id"), inverseJoinColumns = @JoinColumn(name = "question_id"))
+	private List<Question> questions;
 
-	// Overloaded to create custom Validation
-	public Tag(String tag) {
-		this.tag = tag;
+	public Tag() {
 	}
 
 	public Long getId() {

@@ -13,35 +13,36 @@ public class TagService {
 	@Autowired
 	private TagRepository tRepo;
 
-	//Fond All Tags
-	public List<Tag> findAllTags() {
+	public List<Tag> getAllTags() {
 		List<Tag> allTags = this.tRepo.findAll();
 		return allTags;
 	}
-	
-	//Find Tag By Name
-	public Tag findByName(String name) {
-		Tag tag = this.tRepo.findByTagIs(name).orElse(null);
-		return tag;
-	}
-	
-	// Find One Tag
-	public Tag findOneTag(Long id) {
-		Tag tag = this.tRepo.findById(id).orElse(null);
-		return tag;
-	}
 
-	// Create Tag
 	public Tag createTag(Tag newTag) {
 		Tag tag = this.tRepo.save(newTag);
 		return tag;
 	}
 
-	// Overloaded Create Tag for Validations
-	public Tag createTag(String tag) {
-		Tag newTag = new Tag(tag);
-		Tag validTag = this.tRepo.save(newTag);
-		return validTag;
+	public Tag findByString(String tag) {
+		return this.tRepo.findByTagEquals(tag);
 	}
 
+	public Tag findOrCreate(String tag) {
+		Tag newTag = this.findByString(tag.toLowerCase().trim());
+		if (newTag == null) {
+			newTag = new Tag();
+			newTag.setTag(tag);
+			this.tRepo.save(newTag);
+		}
+		return newTag;
+	}
+
+	public void uniqueTag(List<Tag> allTags, Tag newTag) {
+//		for (Tag tag : allTags) {
+//			if (tag.getTag() == newTag.getTag()) {
+//				return;
+//			}
+//		}
+		allTags.add(newTag);
+	}
 }

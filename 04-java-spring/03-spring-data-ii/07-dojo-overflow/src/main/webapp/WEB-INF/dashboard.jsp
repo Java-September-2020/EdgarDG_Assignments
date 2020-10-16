@@ -13,6 +13,38 @@
 	crossorigin="anonymous">
 </head>
 <body>
+<div class="container">
+<hr>
+<h1>Questions Dashboard</h1>
 
+<hr>
+<a href="/questions/new">New Question</a>
+<hr>
+
+
+<table class="table table-dark table-hover">
+<thead>
+<tr>
+<td>Question</td>
+<td>Tags</td>
+</tr>
+</thead>
+<tbody>
+<c:forEach items="${ question }" var="question">
+<tr>
+<td><a href="/questions/${question.id}">${ question.question }</a></td>
+
+<td>
+<c:forEach items="${ question.tags }" var="tag">
+${ tag.tag }<c:if test="${ question.tags.indexOf(tag) != question.tags.size() - 1 }">, </c:if>
+</c:forEach>
+</td>
+
+</tr>
+</c:forEach>
+</tbody>
+</table>
+
+</div>
 </body>
 </html>

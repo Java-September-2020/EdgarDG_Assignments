@@ -9,5 +9,7 @@ import com.edgar.dojooverflow.models.Answer;
 
 @Repository
 public interface AnswerRepository extends CrudRepository<Answer, Long> {
+	
 	List<Answer> findAll();
+		
 }
