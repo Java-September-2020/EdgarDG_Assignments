@@ -37,19 +37,22 @@
 <tbody>
 <c:forEach items="${inState}" var="event">
 <tr>
-	<td><a href="/${event.id}">${event.name}</a></td>
+	<td><a href="/events/${event.id}">${event.name}</a></td>
 	<td>${event.date}</td>
 	<td>${event.location}</td>
 	<td>${event.attendees.size() }</td>
 	<c:choose>
+
 	<c:when test="${event.host.id == user_id }">
-	<td><a href="/events/${event.id}/edit">Edit</a> | <a href="#">Delete</a></td>
+	<td><a href="/events/${event.id}/edit">Edit</a> | <a href="/delete/${event.id}">Delete</a></td>
 	</c:when>
+
 	<c:when test="${event.attendees.contains(user)}">
-	<td><p>Joining</p> | <a href="#">Cancel</a></td>
+	<td><p>Joining</p> | <a href="/unjoin/${event.id}">Cancel</a></td>
+
 	</c:when>
 	<c:otherwise>
-	<td><a href="#">Join</a></td>
+	<td><a href="/join/${event.id}">Join</a></td>
 	</c:otherwise>	
 	</c:choose>
 	</tr>
@@ -71,19 +74,19 @@
 <tbody>
 <c:forEach items="${notInState}" var="event">
 <tr>
-	<td><a href="/${event.id}">${event.name}</a></td>
+	<td><a href="/events/${event.id}">${event.name}</a></td>
 	<td>${event.date}</td>
 	<td>${event.location}</td>
 	<td>${event.attendees.size() }</td>
 	<c:choose>
 	<c:when test="${event.host.id == user_id }">
-	<td><a href="/events/${event.id}/edit">Edit</a> | <a href="#">Delete</a></td>
+	<td><a href="/events/${event.id}/edit">Edit</a> | <a href="/delete/${event.id}">Delete</a></td>
 	</c:when>
 	<c:when test="${event.attendees.contains(user)}">
-	<td><p>Joining</p> | <a href="#">Cancel</a></td>
+	<td><p>Joining</p> | <a href="/unjoin/${event.id}">Cancel</a></td>
 	</c:when>
 	<c:otherwise>
-	<td><a href="#">Join</a></td>
+	<td><a href="/join/${event.id}">Join</a></td>
 	</c:otherwise>	
 	</c:choose>
 	</tr>
@@ -114,7 +117,7 @@
 			<form:errors path="location" />
 			<form:input path="location" />
 		</div>
-		
+
 		<div class="form form-group">
 			<form:label path="state"> State:        
 			<form:errors path="state"/>

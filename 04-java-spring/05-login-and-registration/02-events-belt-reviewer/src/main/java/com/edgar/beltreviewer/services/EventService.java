@@ -51,4 +51,38 @@ public class EventService {
 		return thisHost.getId();
 	}
 	
+	//find Host Name
+	public String findHostName(Long eventId) {
+		Event thisEvent = this.eRepo.findById(eventId).orElse(null);
+		User thisHost = thisEvent.getHost();
+		return thisHost.getFirstName() + " " + thisHost.getLastName();
+	}
+	
+	//Add Attendee
+	public void addAttendee(User user, Event event) {
+		// Get the list from the Team
+		List<User> attendees = event.getAttendees();
+		// Add the User who is attending event
+		attendees.add(user);
+		// Update 
+		this.eRepo.save(event);
+	}
+	
+	//Remove Attendee
+	public void removeAttendee(User user, Event event) {
+		//Get The List From the Event
+		List<User> attendees = event.getAttendees();
+		//Remove the user
+		attendees.remove(user);
+		// Update
+		this.eRepo.save(event);
+	}
+	
+	
+	//Delete Event
+	public void deleteEvent(Long id) {
+		this.eRepo.deleteById(id);
+	}
+	
+	
 }
